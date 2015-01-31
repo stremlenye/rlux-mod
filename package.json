@@ -1,6 +1,6 @@
 {
   "name":"rlux-mod",
-  "version":"0.1",
+  "version":"0.0.1",
   "description":"Simple modularity framework for building web applications based on Flux architecture with ReactJS.",
   "homepage":"https://github.com/stremlenye/rlux-mod",
   "bugs":{
