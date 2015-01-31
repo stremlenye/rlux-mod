@@ -4,6 +4,7 @@
   "description":"Simple modularity framework for building web applications based on Flux architecture with ReactJS.",
   "homepage":"https://github.com/stremlenye/rlux-mod",
   "repository":"https://github.com/stremlenye/rlux-mod",
+  "main":"main.js",
   "bugs":{
     "url":"https://github.com/stremlenye/rlux-mod/issues",
     "email":"stremleney@gmail.com"
