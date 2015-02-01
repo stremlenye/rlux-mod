@@ -49,6 +49,20 @@ var validateModule = function (moduleEntryPoint) {
   return React.isValidElement(moduleEntryPoint);
 };
 
+/**
+ * Return all modules
+ */
+core.getModules = function () {
+  return modules;
+};
+
+/**
+ * Return module by name
+ */
+core.getModule = function (name) {
+  return modules.get(name);
+};
+
 module.exports = core;
 
 module.exports.Dispatcher = dispatcher;
