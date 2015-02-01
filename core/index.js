@@ -5,62 +5,46 @@
  'use strict';
 
 var dispatcher = require('./dispatcher');
-var immutable = require('immutable');
-var React = require('react');
-
-var modules = immutable.Map();
-var defaultModule = null;
+var actions = require('./actions');
+var modulesStores = require('./stores').modules;
+var defaultModuleStores = require('./stores').defaultModule;
 
 var core = {};
-var started = false;
 
 /**
  * Registers module into application
  */
-core.registerModule = function (name, moduleEntryPoint) {
-  if(started){
-    throw "module cant be added after application was started."
-  }
-  if(validateModule(moduleEntryPoint) == false){
-    throw "module entry point is not ReactJS Component";
-  }
-  modules = modules.set(name,moduleEntryPoint);
+core.registerModule = function (name, module) {
+  actions.registerModule(name, module);
 };
 
 /**
  * Sets the default module for the application, which will be used in every
  * unexplicable situation
  */
-core.setDefaultModule = function (moduleEntryPoint) {
-  if(started){
-    throw "default module cant be reset after application was started."
-  }
-  if(validateModule(moduleEntryPoint) == false){
-    throw "module entry point is not ReactJS Component";
-  }
-  defaultModule = moduleEntryPoint;
-};
-
-/**
- * validates the module entry point to
- * @return true if entry point is valid (means it is a React Component with name)
- */
-var validateModule = function (moduleEntryPoint) {
-  return React.isValidElement(moduleEntryPoint);
+core.setDefaultModule = function (module) {
+  actions.setDefaultModule = module;
 };
 
 /**
  * Return all modules
  */
 core.getModules = function () {
-  return modules;
+  return modulesStores.getModules();
 };
 
 /**
  * Return module by name
  */
 core.getModule = function (name) {
-  return modules.get(name);
+  return modulesStores.getModule(name);
+};
+
+/**
+ * Returns the default module
+ */
+core.getDefaultModule = function () {
+  return defaultModuleStores.getDefaultModule();
 };
 
 module.exports = core;

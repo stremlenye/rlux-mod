@@ -40,4 +40,14 @@ dispatcher.handleErrorAction = function(action) {
   });
 };
 
+/**
+ * Dispatch error actions
+ */
+dispatcher.handleCoreAction = function(action) {
+  this.dispatch({
+    source: constants.payloadSources.core,
+    action: action
+  });
+};
+
 module.exports = dispatcher;

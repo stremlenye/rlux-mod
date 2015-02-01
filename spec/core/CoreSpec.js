@@ -13,12 +13,6 @@ describe("Core", function () {
     core.registerModule('some_Module', entryPoint);
   });
 
-  it("shouldn't allow to register Modules which are not the exposed React component", function () {
-    expect(function() {
-      core.registerModule('legal name', {});
-      }).toThrow();
-  });
-
   it("should allow to set default Module", function () {
     var Module = React.createClass({
       render: function () {
@@ -29,23 +23,23 @@ describe("Core", function () {
     core.setDefaultModule(entryPoint);
   });
 
-  it("shouldn't allow to set as default Module not the exposed React component", function () {
-    expect(function () {
-      core.setDefaultModule('legal name', {});
-    }).toThrow();
-  });
-
   it("should allow to get all modules", function () {
     var Module = React.createClass({
       render: function () {
         return null;
       }
     });
-    var entryPoint = React.createElement(Module);
-    core.registerModule('some_Module', entryPoint);
     var modules = core.getModules();
     expect(modules).not.toBeNull();
-    expect(modules.size).toEqual(1);
+    var initialSize = modules.size;
+
+    var entryPoint = React.createElement(Module);
+    core.registerModule('some_module', entryPoint);
+    core.registerModule('some_module2', entryPoint);
+
+    modules = core.getModules();
+    expect(modules).not.toBeNull();
+    expect(modules.size).toEqual(initialSize + 2);
   });
 
   it("should allow to get module by name", function () {

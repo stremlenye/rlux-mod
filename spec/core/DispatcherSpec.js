@@ -12,16 +12,29 @@ describe("Dispatcher", function () {
 
   it("should handle view action",function () {
     expect(Dispatcher.handleViewAction).not.toBe(null);
-    Dispatcher.handleViewAction({});
+    expect(function () {
+      Dispatcher.handleViewAction({});
+    }).not.toThrow();
   });
 
   it("should handle server action",function () {
     expect(Dispatcher.handleServerAction).not.toBe(null);
-    Dispatcher.handleServerAction({});
+    expect(function(){
+      Dispatcher.handleServerAction({});
+    }).not.toThrow();
+  });
+
+  it("should handle core action",function () {
+    expect(Dispatcher.handleCoreAction).not.toBe(null);
+    expect(function(){
+      Dispatcher.handleCoreAction({});
+    }).not.toThrow();
   });
 
   it("should handle error action",function () {
     expect(Dispatcher.handleErrorAction).not.toBe(null);
-    Dispatcher.handleErrorAction({});
+    expect(function () {
+      Dispatcher.handleErrorAction({});
+    }).not.toThrow();
   });
 });
