@@ -2,12 +2,13 @@
  * Core dispatcher implementation with splitting flows of view, server and error
  * actions
  */
+/*jslint node: true */
+'use strict';
 
+var constants = require('../constants');
 var fluxDispatcher = require('flux').Dispatcher;
 
-var dispatcher = {};
-
-dispatcher.prototype = new fluxDispatcher();
+var dispatcher =new fluxDispatcher();
 
 /**
  * Dispatch view actions
