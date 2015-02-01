@@ -12,10 +12,16 @@ var defaultModule;
 
 var defaultModuleStores = {};
 
+/**
+ * Returns true if default module was defined
+ */
 defaultModuleStores.isDefined = function () {
   return typeof(defaultModule) !== 'undefined' && defaultModule !== null;
 };
 
+/**
+ * Returns the default module
+ */
 defaultModuleStores.getDefaultModule = function () {
   return defaultModule;
 };
@@ -34,6 +40,9 @@ defaultModuleStores.getDefaultModule = function () {
   eventEmitter.addListener(eventName, listener);
 };
 
+/**
+ * Registers the default module stores handler into dispatcher
+ */
 defaultModuleStores.dispatchIndex = function () {
   if(payload.source !== constants.payloadSources.core){
     return;
