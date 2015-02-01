@@ -8,36 +8,36 @@
 var constants = require('../constants');
 var fluxDispatcher = require('flux').Dispatcher;
 
-var dispatcher =new fluxDispatcher();
+var dispatcher = new fluxDispatcher();
 
 /**
  * Dispatch view actions
  */
 dispatcher.handleViewAction = function(action) {
-	this.dispatch({
-		source: constants.payloadSources.view,
-		action: action
-	});
+  this.dispatch({
+    source: constants.payloadSources.view,
+    action: action
+  });
 };
 
 /**
  * Dispatch server actions
  */
 dispatcher.handleServerAction = function(action) {
-	this.dispatch({
-		source: constants.payloadSources.server,
-		action: action
-	});
+  this.dispatch({
+    source: constants.payloadSources.server,
+    action: action
+  });
 };
 
 /**
  * Dispatch error actions
  */
 dispatcher.handleErrorAction = function(action) {
-	this.dispatch({
-		source: constants.payloadSources.error,
-		action: action
-	});
+  this.dispatch({
+    source: constants.payloadSources.error,
+    action: action
+  });
 };
 
 module.exports = dispatcher;
