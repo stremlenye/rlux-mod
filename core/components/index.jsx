@@ -3,12 +3,34 @@
  */
 
 var React = require('react');
+var defaultModuleStore = require('../stores').defaultModule;
+var activeModuleStore = require('../stores').activeModule;
 
 var App = React.createClass({
-  //TODO implement display active module display logic
+
+  getInitialState: function() {
+    return {
+      activeModule: defaultModuleStore.getDefaultModule()
+    };
+  },
+
+  componentDidMount: function() {
+    activeModuleStore.subscribe(onChange);
+  },
+
+  componentWillUnmount: function() {
+    activeModuleStore.unsubscribe(onChange);
+  },
+
+  onChange:function () {
+    this.setState({
+      activeModule:activeModuleStore.getActiveModule()
+    });
+  },
+
   render: function() {
     return (
-      null
+      this.state.activeModule
     );
   }
 });
