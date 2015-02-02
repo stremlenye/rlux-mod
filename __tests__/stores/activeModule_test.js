@@ -1,30 +1,30 @@
 /**
- * Default module store test in concept of
+ * Active module store test in concept of
  * http://facebook.github.io/react/blog/2014/09/24/testing-flux-applications.html
  */
 
-jest.dontMock('../../core/stores/defaultModule');
+jest.dontMock('../../core/stores/activeModule');
 jest.dontMock('React');
 
-describe("Default module store", function() {
+describe("Active module store", function() {
   var constants = require('../../core/constants');
   var React = require('react');
 
-  var setDefaultModulePayload = {
+  var setActiveModulePayload = {
     source: constants.payloadSources.core,
     action: {
-      type: constants.actions.setDefaultModule,
+      type: constants.actions.loadModule,
       module: <div />
     }
   };
 
   var Dispatcher;
-  var defaultModuleStore;
+  var activeModuleStore;
   var callback;
 
   beforeEach(function() {
     Dispatcher = require('../../core/dispatcher');
-    defaultModuleStore = require('../../core/stores/defaultModule');
+    activeModuleStore = require('../../core/stores/activeModule');
     callback = Dispatcher.register.mock.calls[0][0];
   });
 
@@ -32,18 +32,19 @@ describe("Default module store", function() {
     expect(Dispatcher.register.mock.calls.length).toBe(1);
   });
 
-  it('initializes with no default module', function() {
-    var module = defaultModuleStore.getDefaultModule();
+  it('initializes with no active module', function() {
+    var module = activeModuleStore.getActiveModule();
     expect(module).toBeUndefined();
-    var isDefined = defaultModuleStore.isDefined();
+    var isDefined = activeModuleStore.isDefined();
     expect(isDefined).toBe(false);
   });
 
-  it('sets new default module', function() {
-      callback(setDefaultModulePayload);
-      var module = defaultModuleStore.getDefaultModule();
+  it('sets new Active module', function() {
+      callback(setActiveModulePayload);
+      var module = activeModuleStore.getActiveModule();
       expect(module).not.toBeNull();
-      var isDefined = defaultModuleStore.isDefined();
+      expect(module).not.toBeUndefined();
+      var isDefined = activeModuleStore.isDefined();
       expect(isDefined).toBe(true);
   });
 });
