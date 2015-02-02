@@ -11,9 +11,25 @@
   },
   "license": "MIT",
   "dependencies": {
+    "es6-promises": "^1.0.10",
     "events": "^1.0.2",
     "flux": "^2.0.1",
     "immutable": "^3.6.2",
+    "promise": "^6.1.0",
+    "promises": "^0.2.5",
     "react": "^0.12.2"
+  },
+  "devDependencies": {
+    "jest-cli": "^0.2.2",
+    "react-tools": "^0.12.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
   }
 }

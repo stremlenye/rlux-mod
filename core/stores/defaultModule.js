@@ -55,6 +55,8 @@ defaultModuleStores.dispatchIndex = function () {
       eventEmitter.emit(eventName);
       break;
   }
+
+  return;
 };
 
 module.exports = defaultModuleStores;

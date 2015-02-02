@@ -23,7 +23,7 @@ core.registerModule = function (name, module) {
  * unexplicable situation
  */
 core.setDefaultModule = function (module) {
-  actions.setDefaultModule = module;
+  actions.setDefaultModule(module);
 };
 
 /**

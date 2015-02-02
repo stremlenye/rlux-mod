@@ -2,10 +2,14 @@
  * Action creators for core data flow.
  * Extends the main core api
  */
+/*jslint node: true */
+'use strict';
 
+var React = require('react');
+var Promise = require('promise');
 var dispatcher = require('../dispatcher');
 var constants = require('../constants');
-var React = require('react');
+
 
 var coreActionCreators = {};
 
@@ -18,13 +22,14 @@ coreActionCreators.registerModule = function(name, module) {
 		module: module,
 		name: name
 	};
-	if(validateModule(module) == false){
+	validateModule(module).then(function(result) {
+		dispatcher.handleCoreAction(action);
+	}, function(reason) {
 		dispatcher.handleErrorAction({
-			message: "Passed module is not a React component",
+			message: reason,
 			original: action
 		});
-	}
-	dispatcher.handleCoreAction(action);
+	});
 };
 
 /**
@@ -36,31 +41,52 @@ coreActionCreators.setDefaultModule = function(module) {
 		module: module
 	};
 
-	if(validateModule(module) == false){
+	validateModule(module).then(function() {
+		dispatcher.handleCoreAction(action);
+	}, function(err) {
 		dispatcher.handleErrorAction({
-			message: "Passed module is not a React component",
+			message: err,
 			original: action
 		});
-	}
-	dispatcher.handleCoreAction(action);
+	});
 };
 
 /**
  * Loads passed module as an active one
  */
-coreActionCreators.loadModule = function (module) {
-  dispatcher.handleCoreAction({
-    type: constants.actions.loadModule,
-    module: module
-  });
+coreActionCreators.loadModule = function(module) {
+	var action = {
+		type: constants.actions.loadModule,
+		module: module
+	};
+	validateModule(module).then(function() {
+		dispatcher.handleCoreAction(action);
+	}, function(err) {
+		dispatcher.handleErrorAction({
+			message: err,
+			original: action
+		});
+	});
 };
 
 /**
-* validates the module entry point to
-* @return true if entry point is valid (means it is a React Component with name)
-*/
-var validateModule = function (moduleEntryPoint) {
-	return React.isValidElement(moduleEntryPoint);
+ * validates the module entry point to
+ * @return promise which rejects if module is not the ReactJs component
+ */
+var validateModule = function(module) {
+	return new Promise(function(fulfill, reject) {
+		try {
+			var isValid = module !== null;
+			isValid = isValid && React.isValidElement(module);
+			if (isValid){
+				fulfill(isValid);
+      }
+			else
+				reject("Passed module is not a React component");
+		} catch (err) {
+			reject(err);
+		}
+	});
 };
 
 module.exports = coreActionCreators;

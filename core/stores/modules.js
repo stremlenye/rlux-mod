@@ -56,6 +56,7 @@ modulesStores.dispatchToken = dispatcher.register(function (payload) {
       eventEmitter.emit(eventName);
       break;
   }
+  return;
 });
 
 module.exports = modulesStores;
