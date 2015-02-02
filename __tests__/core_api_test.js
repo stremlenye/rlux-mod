@@ -85,4 +85,39 @@ describe("Core", function() {
       core.registerModule(name, module);
     });
   });
+
+  pit("should load module by name", function () {
+    return new Promise(function (fulfill, reject) {
+      var name = 'should_load_module_by_name';
+      var module = <Module />;
+      core.registerModule(name, module);
+
+      _dispatchToken = Dispatcher.register(function(payload) {
+        expect(payload.source).not.toEqual(constants.payloadSources.error);
+        expect(payload.source).toEqual(constants.payloadSources.core);
+        var actual = core.getActiveModule();
+        expect(module).not.toBeNull();
+        expect(module).toBe(actual);
+        fulfill();
+      });
+
+      core.loadModule('name');
+    });
+  });
+
+  pit("should not allow to add modules whith same name to prevent modules overwriting", function () {
+    return new Promise(function (fulfill, regect) {
+      var name = 'should_not_allow_to_add_modules_whith_same_name_to_prevent_modules_overwriting';
+      core.registerModule(name, <Module />);
+
+      _dispatchToken = Dispatcher.register(function(payload) {
+        expect(payload.source).toEqual(constants.payloadSources.error);
+        expect(payload.source).not.toEqual(constants.payloadSources.core);
+        fulfill();
+      });
+
+      core.registerModule(name, <Module />);
+
+    });
+  });
 });
