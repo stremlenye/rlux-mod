@@ -16,7 +16,8 @@ var constants = {
   actions:{
     registerModule:prefix + 'registerModule',
     setDefaultModule: prefix + 'setDefaultModule',
-    loadModule: prefix + 'loadModule'
+    loadModule: prefix + 'loadModule',
+    moduleNotFound: prefix + 'moduleNotFound'
   }
 };
 

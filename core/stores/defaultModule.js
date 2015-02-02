@@ -43,7 +43,7 @@ defaultModuleStores.getDefaultModule = function () {
 /**
  * Registers the default module stores handler into dispatcher
  */
-defaultModuleStores.dispatchIndex = function () {
+defaultModuleStores.dispatchIndex = dispatcher.register(function (payload) {
   if(payload.source !== constants.payloadSources.core){
     return;
   }
@@ -57,6 +57,6 @@ defaultModuleStores.dispatchIndex = function () {
   }
 
   return;
-};
+});
 
 module.exports = defaultModuleStores;

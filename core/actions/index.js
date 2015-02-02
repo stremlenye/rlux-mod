@@ -69,6 +69,15 @@ coreActionCreators.loadModule = function(module) {
 	});
 };
 
+coreActionCreators.moduleNotFound = function (name) {
+	var action = {
+		type: constants.actions.moduleNotFound,
+		message: "Module \'" + name + "\' was not found",
+		name: name
+	};
+	dispatcher.handleErrorAction(action);
+};
+
 /**
  * validates the module entry point to
  * @return promise which rejects if module is not the ReactJs component

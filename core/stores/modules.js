@@ -9,7 +9,7 @@ var constants = require('../constants');
 
 var eventName = 'modulesStores_changed';
 
-var modules = immutable.Map();
+var modules = immutable.Map({});
 
 var modulesStores = {};
 

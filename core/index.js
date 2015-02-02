@@ -15,6 +15,12 @@ var core = {};
  * Registers module into application
  */
 core.registerModule = function (name, module) {
+  console.log(name + '\n');
+  var storedModule = modulesStores.getModule(name);
+  console.log(storedModule);
+  if(storedModule){
+    throw "Name \'" + name + "\' already reserved";
+  }
   actions.registerModule(name, module);
 };
 
@@ -45,6 +51,19 @@ core.getModule = function (name) {
  */
 core.getDefaultModule = function () {
   return defaultModuleStores.getDefaultModule();
+};
+
+
+core.loadModule = function (name) {
+  if(typeof(name) !== 'string'){
+    throw "module name should be string";
+  }
+  var module = modulesStores.getModule(name);
+  if(!module){
+    actions.moduleNotFound(name);
+    return;
+  }
+  actions.loadModule(module);
 };
 
 module.exports = core;
