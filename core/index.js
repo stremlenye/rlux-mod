@@ -4,6 +4,7 @@
  /*jslint node: true */
  'use strict';
 
-var dispatcher = require('./dispatcher');
-
-module.exports.Dispatcher = dispatcher;
+module.exports.Dispatcher = require('./dispatcher');
+module.exports.App = require('./components');
+module.exports.Module = require('./components/Module');
+module.exports.DefaultModule = require('./components/DefaultModule');
