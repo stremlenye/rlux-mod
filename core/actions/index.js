@@ -5,7 +5,6 @@
 /*jslint node: true */
 'use strict';
 
-var React = require('react');
 var Promise = require('promise');
 var dispatcher = require('../dispatcher');
 var constants = require('../constants');
@@ -22,11 +21,7 @@ coreActionCreators.registerModule = function(name, module) {
     module: module,
     name: name
   };
-  validateModule(module).then(function(result) {
-    dispatcher.handleCoreAction(action);
-  }, function(reason) {
-    throw reason;
-  });
+  dispatcher.handleCoreAction(action);
 };
 
 /**
@@ -37,14 +32,7 @@ coreActionCreators.loadModule = function(module) {
     type: constants.actions.loadModule,
     module: module
   };
-  validateModule(module).then(function() {
-    dispatcher.handleCoreAction(action);
-  }, function(err) {
-    dispatcher.handleErrorAction({
-      message: err,
-      original: action
-    });
-  });
+  dispatcher.handleCoreAction(action);
 };
 
 /**
@@ -57,25 +45,6 @@ coreActionCreators.moduleNotFound = function(name) {
     name: name
   };
   dispatcher.handleErrorAction(action);
-};
-
-/**
- * validates the module entry point to
- * @return promise which rejects if module is not the ReactJs component
- */
-var validateModule = function(module) {
-  return new Promise(function(fulfill, reject) {
-    try {
-      var isValid = module !== null;
-      isValid = isValid && React.isValidElement(module);
-      if (isValid) {
-        fulfill(isValid);
-      } else
-        reject("Passed module is not a React component");
-    } catch (err) {
-      reject(err);
-    }
-  });
 };
 
 module.exports = coreActionCreators;

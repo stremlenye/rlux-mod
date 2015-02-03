@@ -6,14 +6,14 @@ var React = require('react');
 
 var DefaultModule = React.createClass({
   propTypes:{
-    handler: React.PropTypes.element.isRequired
+    handler: React.PropTypes.any.isRequired
   },
 
   /**
    * Renders module handler, which was passed as a property
    */
   render:function () {
-    return this.props.handler;
+    return React.createFactory(this.props.handler)();
   }
 });
 

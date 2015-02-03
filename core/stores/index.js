@@ -3,5 +3,5 @@
  */
 
 module.exports.modules = require('./modules');
-module.exports.defaultModule = require('./defaultModule');
 module.exports.activeModule = require('./activeModule');
+module.exports.trace = require('./trace');
