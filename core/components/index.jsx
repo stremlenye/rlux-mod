@@ -3,36 +3,50 @@
  */
 
 var React = require('react');
-var defaultModuleStore = require('../stores').defaultModule;
-var activeModuleStore = require('../stores').activeModule;
+var actions = require('../actions');
+var activeModuleStore = require('../stores/activeModule');
+
+var Module = require('./Module');
+var DefaultModule = require('./DefaultModule');
 
 var App = React.createClass({
 
-  getInitialState: function() {
-    return {
-      activeModule: defaultModuleStore.getDefaultModule()
-    };
-  },
-
   componentDidMount: function() {
-    activeModuleStore.subscribe(onChange);
+    React.Children.forEach(this.props.children, function (child,index) {
+      //Reason why we need this check is specs if React
+      //http://facebook.github.io/react/docs/top-level-api.html#react.children.map
+      if(child === null && typeof(child) === 'undefined'){
+        return;
+      }
+      if(child instanceof DefaultModule){
+        actions.registerModule('default', child);
+        return;
+      }
+      if(child instanceof Module){
+        var name = child.name;
+        actions.registerModule(name, child);
+        return;
+      }
+      throw "App element should be supplied with propper child type elements: Module or DefaultModule";
+    });
+    activeModuleStore.subscribe(this.onChange);
+    actions.loadModule('default');
   },
 
   componentWillUnmount: function() {
-    activeModuleStore.unsubscribe(onChange);
+    activeModuleStore.unsubscribe(this.onChange);
   },
 
-  onChange:function () {
+  onChange: function () {
     this.setState({
-      activeModule:activeModuleStore.getActiveModule()
+      activeModule: activeModuleStore.getActiveModule()
     });
   },
 
-  render: function() {
-    return (
-      this.state.activeModule
-    );
+  render: function () {
+    return state.activeModule;
   }
+
 });
 
 module.exports = App;
