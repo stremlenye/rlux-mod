@@ -1,0 +1,30 @@
+{
+  "name": "simple_example",
+  "version": "0.0.1",
+  "description": "Simple example for rlux-mod library.",
+  "homepage": "https://github.com/stremlenye/rlux-mod",
+  "repository": "https://github.com/stremlenye/rlux-mod",
+  "main": "app/App.jsx",
+  "bugs": {
+    "url": "https://github.com/stremlenye/rlux-mod/issues",
+    "email": "stremleney@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "jsx-loader": "^0.12.2",
+    "react-hot-loader": "^1.1.4",
+    "webpack": "^1.5.3",
+    "webpack-dev-server": "^1.7.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
+  }
+}
