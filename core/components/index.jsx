@@ -7,39 +7,44 @@ var actions = require('../actions');
 var modulesStore = require('../stores/modules');
 var activeModuleStore = require('../stores/activeModule');
 var Promise = require('promise');
-var immutable = require('immutable');
 
 //TODO cover trace initialization with 'dev' modifier to disable in production mode
 var Trace = require('../stores').trace;
 
 var App = React.createClass({
-  getInitialState: function() {
-    return {
-      isActiveModuleDefined:false
-    };
+  /**
+   * Registers child as a module in core.
+   */
+  registerModule: function (child) {
+    //Reason why we need this check is specs if React
+    //http://facebook.github.io/react/docs/top-level-api.html#react.children.map
+    if(child === null && typeof(child) === 'undefined'){
+      return;
+    }
+    if(child.type.displayName === "DefaultModule"){
+      actions.registerModule("default", child);
+      return {'default': child};
+    }
+    if(child.type.displayName === "Module"){
+      var name = child.props.name;
+      actions.registerModule(name, child);
+      return {name: child};
+    }
+    throw "App element should be supplied with propper child type elements: Module or DefaultModule";
   },
 
-  children: immutable.Map({}),
-
-  componentDidMount: function() {
-    var ch = React.Children.map(this.props.children, function (child,index) {
-      //Reason why we need this check is specs if React
-      //http://facebook.github.io/react/docs/top-level-api.html#react.children.map
-      if(child === null && typeof(child) === 'undefined'){
-        return;
-      }
-      if(child.type.displayName === "DefaultModule"){
-        return {'default': child};
-      }
-      if(child.type.displayName === "Module"){
-        var name = child.props.name;
-        return {name: child};
-      }
-      throw "App element should be supplied with propper child type elements: Module or DefaultModule";
+  /**
+   * Proccesses props.children object to travers over them and register
+   * as modules in core
+   */
+  proccessChildren: function () {
+    React.Children.map(this.props.children, function (child,index) {
+      return this.registerModule(child);
     },this);
-    for(var prop in ch){
-      this.children = this.children.merge(immutable.Map(ch[prop]));
-    }
+  },
+
+  componentWillMount: function() {
+    this.proccessChildren();
     activeModuleStore.subscribe(this.onChange);
     actions.loadModule('default');
   },
@@ -49,22 +54,29 @@ var App = React.createClass({
   },
 
   onChange: function () {
-    var isDefined = activeModuleStore.isDefined();
-    var activeModuleName = activeModuleStore.getActiveModule();
-
     this.setState({
-      isActiveModuleDefined: isDefined,
-      activeModuleName:activeModuleName
+      isActiveModuleDefined: activeModuleStore.isDefined(),
+      activeModuleName:activeModuleStore.getActiveModule()
     });
   },
 
-  render: function () {
+  getInitialState: function() {
+    return {
+      isActiveModuleDefined:false
+    };
+  },
 
+  /**
+   * Renders the active module component.
+   * If active component isn't awailable in the moment renders nothing
+   */
+  render: function () {
     if(this.state.isActiveModuleDefined){
-      return this.children.get(this.state.activeModuleName);
+      var moduleComponent = modulesStore.getModule(this.state.activeModuleName);
+      return moduleComponent;
     }
     else
-      return <div>Loading</div>;
+      return false;
   }
 
 });

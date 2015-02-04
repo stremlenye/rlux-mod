@@ -1,5 +1,5 @@
 /**
- * Module used by default
+ * Component which represents module which will be used by default
  */
 
 var React = require('react');
