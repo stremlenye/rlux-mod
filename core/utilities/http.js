@@ -11,11 +11,51 @@ var Promise = require('promise');
  * HTTP request model
  */
 var Http = function(request) {
-  if (!request) {
-    return clone(request);
+  if (request) {
+    return clone(request, new Http());
   }
   return this;
 };
+
+/**
+ * Clones object
+ */
+function clone(obj, target) {
+  var copy;
+
+  // Handle the 3 simple types, and null or undefined
+  if (null == obj || "object" != typeof obj) return obj;
+
+  // Handle Date
+  if (obj instanceof Date) {
+    copy = new Date();
+    copy.setTime(obj.getTime());
+    return copy;
+  }
+
+  // Handle Array
+  if (obj instanceof Array) {
+    copy = [];
+    for (var i = 0, len = obj.length; i < len; i++) {
+      copy[i] = clone(obj[i]);
+    }
+    return copy;
+  }
+
+  // Handle Object
+  if (obj instanceof Object) {
+    if(!target)
+      copy = {};
+    else
+      copy = target;
+    for (var attr in obj) {
+      if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+    }
+    return copy;
+  }
+
+  throw new Error("Unable to copy obj! Its type isn't supported.");
+}
 
 /**
  * Adds URL information to HTTP request model
@@ -43,9 +83,10 @@ Http.prototype.withMethod = function(method) {
  */
 Http.prototype.withHeader = function(header, value) {
   var request = new Http(this);
-  request.headers = (request.headers ? request.headers : []).push({
-    header: value
-  });
+  var tuple = {};
+  tuple[header] = value;
+  request.headers = (request.headers ? request.headers : []);
+  request.headers.push(tuple);
   return request;
 };
 
@@ -64,6 +105,7 @@ Http.prototype.withBody = function(body) {
  */
 Http.prototype.exec = function() {
   validate(this);
+  return exec(this);
 };
 
 /**
@@ -211,7 +253,6 @@ function submit(http) {
  */
 function addHeaders(xmlhttp, headers) {
   if (!headers) return;
-
   headers.forEach(function(header) {
     for (var key in header) {
       xmlhttp.setRequestHeader(key, header[key]);
@@ -247,7 +288,7 @@ function onFailed(reject, http, xmlhttp) {
 var getXmlHttp = function(fulfill, reject) {
   var xmlhttp = new XMLHttpRequest();
   //TODO Uses CORS by default but may be should be able to be switched on/of
-  xmlhttp.withCredentials = true;
+  //xmlhttp.withCredentials = true;
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState != 4)
       return;
@@ -262,42 +303,7 @@ var getXmlHttp = function(fulfill, reject) {
   return xmlhttp;
 };
 
-/**
- * Clones object
- */
-function clone(obj) {
-  var copy;
 
-  // Handle the 3 simple types, and null or undefined
-  if (null == obj || "object" != typeof obj) return obj;
-
-  // Handle Date
-  if (obj instanceof Date) {
-    copy = new Date();
-    copy.setTime(obj.getTime());
-    return copy;
-  }
-
-  // Handle Array
-  if (obj instanceof Array) {
-    copy = [];
-    for (var i = 0, len = obj.length; i < len; i++) {
-      copy[i] = clone(obj[i]);
-    }
-    return copy;
-  }
-
-  // Handle Object
-  if (obj instanceof Object) {
-    copy = {};
-    for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
-    }
-    return copy;
-  }
-
-  throw new Error("Unable to copy obj! Its type isn't supported.");
-}
 
 
 

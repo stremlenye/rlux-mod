@@ -9,3 +9,4 @@ module.exports.App = require('./components');
 module.exports.Module = require('./components/Module');
 module.exports.DefaultModule = require('./components/DefaultModule');
 module.exports.ModuleActivationMixin = require('./mixins/ModuleActivationMixin');
+module.exports.Http = require('./utilities/http');
