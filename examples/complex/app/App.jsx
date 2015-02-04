@@ -17,8 +17,8 @@ var Products = require('./modules/products');
 var Application =
       (<App>
         <DefaultModule handler={Index} />
-        <Module handler={Dashboard} />
-        <Module handler={Products} />
+        <Module name="dashboard" handler={Dashboard} />
+        <Module name="products" handler={Products} />
       </App>);
 
 React.render(Application, document.body);
