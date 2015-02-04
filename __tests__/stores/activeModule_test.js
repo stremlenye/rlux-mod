@@ -14,7 +14,7 @@ describe("Active module store", function() {
     source: constants.payloadSources.core,
     action: {
       type: constants.actions.loadModule,
-      module: <div />
+      module: 'module'
     }
   };
 
