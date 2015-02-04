@@ -2,7 +2,7 @@
  * SPHERE.IO products api client
  */
 
-
+//TODO hide this in settings or auth module
 var access = {
   "access_token":"mwAjsOPX0qWHnqkRFH0eX8cFMztTg7pS",
   "token_type":"Bearer",
