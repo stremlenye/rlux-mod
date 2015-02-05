@@ -6,6 +6,7 @@
 var React = require('react');
 var actions = require('../actions');
 
+var HomeButton = require('./molecules/HomeButton');
 var Tile = require('./Tile');
 
 var DashboardGrid = React.createClass({
@@ -17,6 +18,7 @@ var DashboardGrid = React.createClass({
   render: function() {
     return (
       <div>
+        <HomeButton />
         <Tile title="Products" source="products" />
         <Tile title="Categories" source="categories" />
       </div>

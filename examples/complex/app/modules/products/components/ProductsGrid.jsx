@@ -6,6 +6,7 @@ var React = require('react');
 var productsStore = require('../stores');
 var constants = require('../constants');
 
+var HomeButton = require('./molecules/HomeButton');
 var Product = require('./Product');
 
 var ProductsGrid = React.createClass({
@@ -40,6 +41,7 @@ var ProductsGrid = React.createClass({
     }
     return (
       <div>
+        <HomeButton />
         {
           this.state.products.map(function (product) {
             return <Product key={product.id} product={product} />;
