@@ -3,13 +3,14 @@
  */
 
 var React = require('react');
+var Settings = require('../../../../../../core').Settings;
 
 var Product = React.createClass({
 
   getInitialState: function() {
+    var culture = Settings.get('culture');
     return {
-      //TODO retrieve information about current locale from core
-      locale:'en'
+      locale: culture ? culture: 'en'
     };
   },
 
