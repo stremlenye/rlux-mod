@@ -50,7 +50,7 @@ activeModuleStore.dispatchToken = dispatcher.register(function (payload) {
 
   switch(action.type){
     case constants.actions.loadModule:
-      activeModule = action.module;
+      activeModule = action.module ? action.module: 'default';
       eventEmitter.emit(eventName);
       break;
   }
