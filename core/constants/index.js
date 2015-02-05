@@ -16,7 +16,13 @@ var constants = {
   actions:{
     registerModule:prefix + 'registerModule',
     loadModule: prefix + 'loadModule',
-    moduleNotFound: prefix + 'moduleNotFound'
+    moduleNotFound: prefix + 'moduleNotFound',
+    setSetting: prefix + 'setSetting'
+  },
+  settings:{
+    groups:{
+      default:'gloabal'
+    }
   }
 };
 
