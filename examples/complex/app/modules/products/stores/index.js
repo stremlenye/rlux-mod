@@ -28,7 +28,7 @@ productsStore.dispatchIndex = Dispatcher.register(function (payload) {
 
   switch(action.type){
     case constants.actions.productsLoaded:
-      products = action.products;
+      products = action.products.results;
       eventEmitter.emit(eventName);
   }
 });

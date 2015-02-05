@@ -21,6 +21,7 @@ products.loadProducts = function () {
     .withUrl("https://api.sphere.io/" + access.projectKey + "/product-projections")
     .withMethod('GET')
     .withHeader('Authorization',access.token_type + " " + access.access_token)
+    .withResponseType('json')
     .exec();
 };
 

@@ -11,7 +11,7 @@ productsActionCreators.loadProducts = function () {
   service.loadProducts().then(function (products) {
     Dispatcher.handleServerAction({
       type: constants.actions.productsLoaded,
-      products: products
+      products: products.response
     });
   },function (reason) {
     Dispatcher.handleErrorAction({

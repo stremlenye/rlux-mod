@@ -44,7 +44,7 @@ function clone(obj, target) {
 
   // Handle Object
   if (obj instanceof Object) {
-    if(!target)
+    if (!target)
       copy = {};
     else
       copy = target;
@@ -101,6 +101,17 @@ Http.prototype.withBody = function(body) {
 };
 
 /**
+ * Sets response content type
+ * Proper values could be obtained form XmlHttpRequest specification
+ * https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+ */
+Http.prototype.withResponseType = function(type) {
+  var request = new Http(this);
+  request.responseType = type;
+  return request;
+};
+
+/**
  * Executes HTTP request
  */
 Http.prototype.exec = function() {
@@ -115,6 +126,7 @@ function validate(http) {
   validateUrl(http.url);
   validateMethod(http.method);
   validateHeaders(http.headers);
+  validateResponseType(http.responseType);
 }
 
 /**
@@ -176,6 +188,19 @@ function validateHeader(header) {
   }
 }
 
+function validateResponseType(type) {
+  switch (type) {
+    case '':
+    case 'arraybuffer':
+    case 'blob':
+    case 'document':
+    case 'text':
+    case 'json':
+      return;
+  }
+  throw "Response content type '" + type + "' is not currently supported";
+}
+
 /**
  * Executes validated http request
  */
@@ -203,11 +228,14 @@ function exec(http) {
  */
 function get(http) {
   return new Promise(function(fulfill, reject) {
-    var xmlhttp = getXmlHttp(onSucceed.bind(this, fulfill, http),
-      onFailed.bind(this, reject, http));
+    var xmlhttp = getXmlHttp(
+      onSucceed.bind(this, fulfill, http),
+      onFailed.bind(this, reject, http)
+    );
 
     xmlhttp.open('GET', http.url, true);
     addHeaders(xmlhttp, http.headers);
+    setResponseType(xmlhttp, http.responseType);
 
     xmlhttp.send(null);
   });
@@ -239,11 +267,15 @@ function del(http) {
  */
 function submit(http) {
   return new Promise(function(fulfill, reject) {
-    var xmlhttp = getXmlHttp(onSucceed.bind(this, fulfill, http),
-      onFailed.bind(this, reject, http));
+    var xmlhttp = getXmlHttp(
+      onSucceed.bind(this, fulfill, http),
+      onFailed.bind(this, reject, http)
+    );
 
     xmlhttp.open(http.method, http.url, true);
     addHeaders(xmlhttp, http.headers);
+    setResponseType(xmlhttp, http.responseType);
+
     xmlhttp.send(http.body);
   });
 }
@@ -258,6 +290,13 @@ function addHeaders(xmlhttp, headers) {
       xmlhttp.setRequestHeader(key, header[key]);
     }
   });
+  return xmlhttp;
+}
+
+function setResponseType(xmlhttp, responseType) {
+  if(!responseType) return;
+  xmlhttp.responseType = responseType;
+  return xmlhttp;
 }
 
 /**
@@ -287,24 +326,25 @@ function onFailed(reject, http, xmlhttp) {
  */
 var getXmlHttp = function(fulfill, reject) {
   var xmlhttp = new XMLHttpRequest();
-  //TODO Uses CORS by default but may be should be able to be switched on/of
-  //xmlhttp.withCredentials = true;
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState != 4)
       return;
-    switch (xmlhttp.status) {
-      case 200:
-        fulfill(xmlhttp);
-        break;
-      default:
-        reject(xmlhttp);
+    if (isStatusOkLike(xmlhttp.status)) {
+      fulfill(xmlhttp);
+    } else {
+      reject(xmlhttp);
     }
   };
   return xmlhttp;
 };
 
-
-
-
+/**
+ * Checks if status code is in range 200…299 to enshure response is in Ok state
+ */
+function isStatusOkLike(statusCode) {
+  var delta = statusCode - 200;
+  var isOk = delta >= 0;
+  return isOk && delta < 100;
+}
 
 module.exports = Http;
