@@ -4,7 +4,7 @@
 
 var services = require('../services');
 var constants = require('../constants');
-var dispatcher = require('../../../../../../core').Dispatcher;
+var dispatcher = require('rlux').Dispatcher;
 
 var dashboardActionsCreators = {
 

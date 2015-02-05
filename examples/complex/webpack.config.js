@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require("path");
 
 module.exports = {
   // Entry point for static analyzer:
@@ -25,7 +26,10 @@ module.exports = {
   resolve: {
     root: __dirname,
     // Allow to omit extensions when requiring these files
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    alias:{
+      rlux: path.join(__dirname,'../../main')
+    }
   },
 
   module: {

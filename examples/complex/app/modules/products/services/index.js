@@ -6,8 +6,8 @@
 
 
 
-var Http = require('../../../../../../core').Http;
-var Settings = require('../../../../../../core').Settings;
+var Http = require('rlux').Http;
+var Settings = require('rlux').Settings;
 
 var products = {};
 

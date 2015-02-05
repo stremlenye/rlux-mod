@@ -3,7 +3,7 @@
  */
 
 var productsActionCreators = {};
-var Dispatcher = require('../../../../../../core').Dispatcher;
+var Dispatcher = require('rlux').Dispatcher;
 var constants = require('../constants');
 var service = require('../services');
 

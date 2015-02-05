@@ -2,7 +2,7 @@
  * Products store
  */
 
-var Dispatcher = require('../../../../../../core').Dispatcher;
+var Dispatcher = require('rlux').Dispatcher;
 var constants = require('../constants');
 var eventEmitter = new(require('events').EventEmitter)();
 var eventName = 'productsStore_changed';

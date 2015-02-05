@@ -5,9 +5,9 @@
 var React = require('react');
 
 //rlux components
-var App = require('../../../core').App;
-var DefaultModule = require('../../../core').DefaultModule;
-var Module = require('../../../core').Module;
+var App = require('rlux').App;
+var DefaultModule = require('rlux').DefaultModule;
+var Module = require('rlux').Module;
 
 //Modules
 var Index = require('./modules/index');
@@ -15,7 +15,7 @@ var Dashboard = require('./modules/dashboard');
 var Products = require('./modules/products');
 
 //Settings initialization
-var Settings = require('../../../core').Settings;
+var Settings = require('rlux').Settings;
 Settings.set('api_access', {
   "access_token":"mwAjsOPX0qWHnqkRFH0eX8cFMztTg7pS",
   "token_type":"Bearer",

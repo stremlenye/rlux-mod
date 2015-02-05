@@ -4,6 +4,7 @@
 
 var React = require('react');
 var DashboardGrid = require('./components/DashboardGrid');
+var ModuleActivationMixin = require('rlux').ModuleActivationMixin;
 
 var Dashboard = React.createClass({
 
