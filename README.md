@@ -12,10 +12,24 @@ So I decided to rewrite imperative API (e.g `core.registerModule`) to someting l
   <Module name="Another_Module_Name" handler={AnotherModuleHandler} />
 </App>
 ```
+`Module` component is a common module registration item, which supplied by module name and React Component handler as a properties;
 
-The inner logic would get App.props.children and iterate through to register modules by itself on application start.
-So we don't have to test weird old stile API – just Flux architecture elements and React component with simple logic.
+`DefaultModule` component is a default startup module (e.g. Index module to render navigation links).
 
-On render stage component should just choose the proper active Module element and render only one child.
+###In depth
+The inner logic gets App.props.children and iterate through them to register modules in modules store while application starting.
 
+On render stage App component should just choose the proper active Module element and render only one child.
 In its turn, Module component will render the handler property passed before.
+
+To activate any module from the outside of the core, lib exports [ModuleActivationMixin](https://github.com/stremlenye/rlux-mod/tree/master/core/mixins).
+
+###Utilities
+In addition to rlux 'kind-of-framework' it has its own implemented simple http client and settings share utility.
+Main approach to implement them was to reduce amount of dependencies in core, but provide most necessary functions for front-end framework and leave module developers freedom to use what ever they want.
+Could be referenced by
+`require('rlux').Http` and
+`require('rlux').Settings`
+
+###Development helpers
+To make framework more verbose it is implemented special fake store, which prints all actions payloads to the standart console output.
