@@ -10,16 +10,20 @@
     "email": "stremleney@gmail.com"
   },
   "license": "MIT",
+  "peerDependecies":{
+    "react": "^0.12.2"
+  },
   "dependencies": {
     "es6-promises": "^1.0.10",
     "events": "^1.0.2",
     "flux": "^2.0.1",
     "immutable": "^3.6.2",
-    "promise": "^6.1.0",
-    "react": "^0.12.2"
+    "promise": "^6.1.0"
   },
   "devDependencies": {
     "jest-cli": "^0.2.2",
+    "jsx-loader": "^0.12.2",
+    "react-hot-loader": "^1.1.4",
     "react-tools": "^0.12.2"
   },
   "scripts": {
