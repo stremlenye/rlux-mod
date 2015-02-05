@@ -3,7 +3,7 @@
  */
 
 var services = require('../services');
-var services = require('../constants');
+var constants = require('../constants');
 var dispatcher = require('../../../../../../core').Dispatcher;
 
 var dashboardActionsCreators = {
@@ -11,31 +11,31 @@ var dashboardActionsCreators = {
   /**
    * Loads all the data nessesary for dashboard
    */
-  loadDashboardData: function () {
+  loadData: function () {
     services.loadProducts().then(function (products) {
-      dispatcher.handlerServerAction({
+      dispatcher.handleServerAction({
         type: constants.actions.dataLoaded,
-        dataSource: 'Products',
+        source: 'products',
         data: products.response
       });
     }, function (reason) {
       dispatcher.handleErrorAction({
         type: constants.actions.dataLoadingFailed,
         reason: reason,
-        dataSource: 'Products'
+        source: 'products'
       });
     });
     services.loadCategories().then(function (categories) {
-      dispatcher.handlerServerAction({
+      dispatcher.handleServerAction({
         type: constants.actions.dataLoaded,
-        dataSource: 'Categories',
+        source: 'categories',
         data: categories.response
       });
     }, function (reason) {
       dispatcher.handleErrorAction({
         type: constants.actions.dataLoadingFailed,
         reason: reason,
-        dataSource: 'Categories'
+        source: 'categories'
       });
     });
   }

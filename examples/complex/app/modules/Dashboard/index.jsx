@@ -3,17 +3,16 @@
  */
 
 var React = require('react');
+var DashboardGrid = require('./components/DashboardGrid');
 
-var Daschboard = React.createClass({
+var Dashboard = React.createClass({
 
   render: function() {
     return (
-      <h1>
-        Hello world, I am dashboard!
-      </h1>
+      <DashboardGrid />
     );
   }
 
 });
 
-module.exports = Daschboard;
+module.exports = Dashboard;

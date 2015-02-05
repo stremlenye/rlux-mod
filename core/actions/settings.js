@@ -15,3 +15,5 @@ var settingsActionCreators = {
     });
   }
 };
+
+module.exports = settingsActionCreators;
