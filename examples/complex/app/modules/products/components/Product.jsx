@@ -47,7 +47,7 @@ var Product = React.createClass({
       <div {...this.props}>
         <h2>{this.getName(this.props.product, this.state.locale)}</h2>
         <p>{this.getDescription(this.props.product, this.state.locale)}</p>
-        <img src={this.getPreview(this.props.product)} />
+        <img src={this.getPreview(this.props.product)} height="250"/>
       </div>
     );
   }

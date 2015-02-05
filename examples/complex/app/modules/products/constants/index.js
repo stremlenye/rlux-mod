@@ -1,11 +1,21 @@
 /**
  * Products module constants
  */
+var prefix = 'productsModule_';
 
 var productsConstants = {
   actions:{
-    productsLoaded:'productsLoaded',
-    productLoadingFailed: 'productLoadingFailed'
+    productsLoaded: prefix + 'productsLoaded',
+    productLoadingFailed: prefix + 'productLoadingFailed'
+  },
+  stores:{
+    products:{
+      statuses:{
+        empty: 'empty',
+        actual: 'actual',
+        error: 'error'
+      }
+    }
   }
 };
 

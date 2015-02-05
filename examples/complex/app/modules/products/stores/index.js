@@ -8,11 +8,16 @@ var eventEmitter = new(require('events').EventEmitter)();
 var eventName = 'productsStore_changed';
 
 var products;
+var status = constants.stores.products.statuses.empty;
 
 var productsStore = {};
 
 productsStore.getAll = function () {
   return products;
+};
+
+productsStore.getStatus = function () {
+  return status;
 };
 
 productsStore.subscribe = function (listener) {
@@ -29,7 +34,14 @@ productsStore.dispatchIndex = Dispatcher.register(function (payload) {
   switch(action.type){
     case constants.actions.productsLoaded:
       products = action.products.results;
+      status = constants.stores.products.statuses.actual;
       eventEmitter.emit(eventName);
+      break;
+
+    case constants.actions.productLoadingFailed:
+      status = constants.stores.products.statuses.error;
+      eventEmitter.emit(eventName);
+      break;
   }
 });
 

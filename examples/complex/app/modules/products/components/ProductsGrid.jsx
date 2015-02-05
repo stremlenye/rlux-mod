@@ -4,6 +4,7 @@
 
 var React = require('react');
 var productsStore = require('../stores');
+var constants = require('../constants');
 
 var Product = require('./Product');
 
@@ -11,7 +12,7 @@ var ProductsGrid = React.createClass({
 
   getInitialState: function() {
     return {
-     status: 'pending'
+     status: productsStore.getStatus()
     };
   },
 
@@ -25,16 +26,16 @@ var ProductsGrid = React.createClass({
 
   onChange:function () {
     this.setState({
-      status:'ready',
+      status: productsStore.getStatus(),
       products: productsStore.getAll()
     });
   },
 
   render: function() {
-    if(this.state.status == 'pending'){
+    if(this.state.status == constants.stores.products.statuses.empty){
       return <div>Loading</div>;
     }
-    if(this.state.status == 'error'){
+    if(this.state.status == constants.stores.products.statuses.error){
       return <div>{this.state.error}</div>;
     }
     return (
