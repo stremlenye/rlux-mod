@@ -11,10 +11,15 @@ var Product = require('./Product');
 
 var ProductsGrid = React.createClass({
 
-  getInitialState: function() {
+  getState: function () {
     return {
-     status: productsStore.getStatus()
+      status: productsStore.getStatus(),
+      products: productsStore.getAll()
     };
+  },
+
+  getInitialState: function() {
+    return this.getState();
   },
 
   componentDidMount: function() {
@@ -26,10 +31,7 @@ var ProductsGrid = React.createClass({
   },
 
   onChange:function () {
-    this.setState({
-      status: productsStore.getStatus(),
-      products: productsStore.getAll()
-    });
+    this.setState(this.getState());
   },
 
   render: function() {
