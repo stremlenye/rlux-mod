@@ -18,6 +18,11 @@ var constants = {
     loadModule: prefix + 'loadModule',
     moduleNotFound: prefix + 'moduleNotFound',
     setSetting: prefix + 'setSetting'
+  },
+  settings:{
+    groups:{
+      default:'gloabal'
+    }
   }
 };
 

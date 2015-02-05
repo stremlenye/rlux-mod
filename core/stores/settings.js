@@ -11,16 +11,28 @@ var constants = require('../constants');
 
 var eventName = 'settingsStore_changed';
 
-var settings = immutable.Map({});
+var settings = immutable.Map({}).set(constants.settings.groups.default, immutable.Map({}));
 
 var settingsStore = {};
 
-settingsStore.getAll = function () {
-  return settings;
+/**
+ * Retrieves all group specific settings.
+ * If group was not specified, retrives settings from default group
+ */
+settingsStore.getAll = function (group) {
+  return settings.get(group?group:constants.settings.groups.default);
 };
 
-settingsStore.get = function (key) {
-  return settings.get(key);
+/**
+ * Retrieves all group specific setting.
+ * If group was not specified, tryes to retrive setting from default group
+ * If setting not found returns `undefined`
+ */
+settingsStore.get = function (key, group) {
+  group = group?group:constants.settings.groups.default;
+  if(settings.has(group))
+    return settings.get(group).get(key);
+  return undefined;
 };
 
 /**
@@ -48,7 +60,9 @@ settingsStore.dispatchIndex = dispatcher.register(function (payload) {
 
   switch(action.type){
     case constants.actions.setSetting:
-      settings = settings.set(action.key, action.value);
+      //checks does settings have group specified, if false then create new one
+      var groupSettings = settings.has(action.group) ? settings.get(action.group): immutable.Map({});
+      settings.set(action.group, groupSettings.set(action.key, action.value));
       eventEmitter.emit(eventName);
       break;
   }

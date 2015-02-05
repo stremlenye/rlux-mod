@@ -16,6 +16,7 @@ describe("Settings store", function() {
     source: constants.payloadSources.core,
     action: {
       type: constants.actions.setSetting,
+      group: 'global',
       key: 'new_setting',
       value: {some:'value'}
     }
