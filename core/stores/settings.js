@@ -19,8 +19,8 @@ var settingsStore = {};
  * Retrieves all group specific settings.
  * If group was not specified, retrives settings from default group
  */
-settingsStore.getAll = function (group) {
-  return settings.get(group?group:constants.settings.groups.default);
+settingsStore.getAll = function(group) {
+  return settings.get(group ? group : constants.settings.groups.default);
 };
 
 /**
@@ -28,9 +28,9 @@ settingsStore.getAll = function (group) {
  * If group was not specified, tryes to retrive setting from default group
  * If setting not found returns `undefined`
  */
-settingsStore.get = function (key, group) {
-  group = group?group:constants.settings.groups.default;
-  if(settings.has(group))
+settingsStore.get = function(key, group) {
+  group = group ? group : constants.settings.groups.default;
+  if (settings.has(group))
     return settings.get(group).get(key);
   return undefined;
 };
@@ -52,17 +52,17 @@ settingsStore.unsubscribe = function(listener) {
 /**
  * Registers the settings store handler into dispatcher
  */
-settingsStore.dispatchIndex = dispatcher.register(function (payload) {
-  if(payload.source !== constants.payloadSources.core){
+settingsStore.dispatchIndex = dispatcher.register(function(payload) {
+  if (payload.source !== constants.payloadSources.core) {
     return;
   }
   var action = payload.action;
 
-  switch(action.type){
+  switch (action.type) {
     case constants.actions.setSetting:
       //checks does settings have group specified, if false then create new one
-      var groupSettings = settings.has(action.group) ? settings.get(action.group): immutable.Map({});
-      settings.set(action.group, groupSettings.set(action.key, action.value));
+      var groupSettings = settings.has(action.group) ? settings.get(action.group) : immutable.Map({});
+      settings = settings.set(action.group, groupSettings.set(action.key, action.value));
       eventEmitter.emit(eventName);
       break;
   }

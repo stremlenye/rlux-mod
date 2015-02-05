@@ -5,7 +5,6 @@
 
 jest.dontMock('../../core/stores/settings');
 jest.dontMock('immutable');
-jest.dontMock('React');
 
 describe("Settings store", function() {
   var constants = require('../../core/constants');
@@ -16,9 +15,11 @@ describe("Settings store", function() {
     source: constants.payloadSources.core,
     action: {
       type: constants.actions.setSetting,
-      group: 'global',
+      group: constants.settings.groups.default,
       key: 'new_setting',
-      value: {some:'value'}
+      value: {
+        some: 'value'
+      }
     }
   };
 
