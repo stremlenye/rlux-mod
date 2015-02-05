@@ -3,7 +3,7 @@
  */
 
 var React = require('react');
-var Settings = require('../../../../../../core').Settings;
+var Settings = require('rlux').Settings;
 
 var Product = React.createClass({
 

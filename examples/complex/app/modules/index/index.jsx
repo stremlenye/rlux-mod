@@ -4,7 +4,7 @@
  */
 
 var React = require('react');
-var ModuleActivationMixin = require('../../../../../core').ModuleActivationMixin;
+var ModuleActivationMixin = require('rlux').ModuleActivationMixin;
 
 var Index = React.createClass({
   mixins:[ModuleActivationMixin],

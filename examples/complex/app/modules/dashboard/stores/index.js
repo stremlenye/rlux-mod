@@ -2,7 +2,7 @@
  * Dashboard data stores
  */
 
-var dispatcher = require('../../../../../../core').Dispatcher;
+var dispatcher = require('rlux').Dispatcher;
 var Map = require('immutable').Map;
 var constants = require('../constants');
 var eventEmitter = new(require('events').EventEmitter)();
