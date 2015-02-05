@@ -3,7 +3,7 @@
  * Shows tiles with some data retrieved from variouse data sources
  */
 
-var React = require('react');
+var React = require('rlux').React;
 var actions = require('../actions');
 
 var HomeButton = require('./molecules/HomeButton');

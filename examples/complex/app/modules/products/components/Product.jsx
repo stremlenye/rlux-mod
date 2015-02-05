@@ -2,7 +2,7 @@
  * Single product item view
  */
 
-var React = require('react');
+var React = require('rlux').React;
 var Settings = require('rlux').Settings;
 
 var Product = React.createClass({

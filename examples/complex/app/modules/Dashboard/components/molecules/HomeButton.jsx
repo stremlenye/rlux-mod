@@ -2,7 +2,7 @@
  * Button switch current active module to default
  */
 
-var React = require('react');
+var React = require('rlux').React;
 var ModuleActivationMixin = require('rlux').ModuleActivationMixin;
 
 var HomeButton = React.createClass({

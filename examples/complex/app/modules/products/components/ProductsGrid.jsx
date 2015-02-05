@@ -2,7 +2,7 @@
  * Grid of products
  */
 
-var React = require('react');
+var React = require('rlux').React;
 var productsStore = require('../stores');
 var constants = require('../constants');
 

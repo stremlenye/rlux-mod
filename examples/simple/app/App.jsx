@@ -2,7 +2,7 @@
  * Simple React Application entry point
  */
 
-var React = require('react');
+var React = require('rlux').React;
 var Dashboard = require('./modules/Dashboard');
 var App = require('rlux').App;
 var DefaultModule = require('rlux').DefaultModule;

@@ -3,7 +3,7 @@
  * with the supplied data source property
  */
 
-var React = require('react');
+var React = require('rlux').React;
 var dataStore = require('../stores');
 var constants = require('../constants');
 

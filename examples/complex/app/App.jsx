@@ -2,7 +2,7 @@
  * Simple React Application entry point
  */
 
-var React = require('react');
+var React = require('rlux').React;
 
 //rlux components
 var App = require('rlux').App;

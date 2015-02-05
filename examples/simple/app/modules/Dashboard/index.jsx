@@ -2,7 +2,7 @@
  * Pretty simple dashboard stub
  */
 
-var React = require('react');
+var React = require('rlux').React;
 
 var Daschboard = React.createClass({
 
