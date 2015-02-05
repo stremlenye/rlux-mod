@@ -4,6 +4,7 @@
  /*jslint node: true */
  'use strict';
 
+module.exports.React = require('react');
 module.exports.Dispatcher = require('./dispatcher');
 module.exports.App = require('./components');
 module.exports.Module = require('./components/Module');
