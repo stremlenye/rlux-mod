@@ -5,10 +5,8 @@
 /*jslint node: true */
 'use strict';
 
-var Promise = require('promise');
 var dispatcher = require('../dispatcher');
 var constants = require('../constants');
-
 
 var coreActionCreators = {};
 

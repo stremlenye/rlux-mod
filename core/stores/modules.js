@@ -42,7 +42,7 @@ modulesStores.unsubscribe = function(listener) {
 };
 
 /**
- * Registers the module stores handler into dispatcher
+ * Registers the module store handler into dispatcher
  */
 modulesStores.dispatchToken = dispatcher.register(function (payload) {
   if(payload.source !== constants.payloadSources.core){
